@@ -125,3 +125,11 @@ dla miliona:
        user     system      total        real
    5.500348   0.626179   6.126527 ( 20.441566)
 ```
+
+## 12. Zamiana samych insertow na thready
+dla miliona:
+```bash
+=> rails "data:import"
+       user     system      total        real
+   5.602786   0.642253   6.245039 (  9.607213)
+```
