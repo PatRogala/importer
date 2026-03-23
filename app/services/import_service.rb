@@ -2,7 +2,7 @@ class ImportService < ApplicationService
   BATCH_SIZE = 5000
 
   def call
-    CSV.foreach("tmp/data.csv", headers: true).each_slice(BATCH_SIZE) do |batch|
+    CSV.foreach("tmp/data.csv", headers: true).lazy.each_slice(BATCH_SIZE) do |batch|
       process_batch(batch)
     end
   end

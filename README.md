@@ -60,3 +60,11 @@ dla miliona:
        user     system      total        real
   30.657922   0.607842  31.265764 ( 52.911782)
 ```
+
+## 5 dodanie lazy loadera
+dla miliona:
+```bash
+=> rails "data:import"
+       user     system      total        real
+  29.679511   0.578192  30.257703 ( 50.677439)
+```
