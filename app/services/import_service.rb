@@ -30,13 +30,12 @@ class ImportService < ApplicationService
   private
 
   def process_batch(raw_lines)
-    now = Time.current
+    ts = Time.current.to_fs(:db)
 
     rows = raw_lines.map { |line| line.chomp.split(",") }
     emails = rows.map { |r| r[0] }.uniq
     emails.sort! # Gap Lock Deadlocks
 
-    ts = now.to_fs(:db)
     placeholders = ([ "(?, ?, ?)" ] * emails.size).join(", ")
     values = emails.flat_map { |e| [ e, ts, ts ] }
     sql = ActiveRecord::Base.sanitize_sql(
