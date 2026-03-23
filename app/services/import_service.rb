@@ -6,7 +6,7 @@ class ImportService < ApplicationService
   def call
     ts = Time.current.to_fs(:db)
 
-    all_lines = File.foreach(CSV_PATH).lazy.drop(1)
+    all_lines = File.foreach(CSV_PATH).drop(1)
     emails = all_lines.map { |line| line.split(",", 2).first }.uniq.sort
 
     parallel_insert(emails.each_slice(BATCH_SIZE)) do |batch, conn|
