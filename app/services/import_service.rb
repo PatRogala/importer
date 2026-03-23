@@ -16,12 +16,12 @@ class ImportService < ApplicationService
     ActiveRecord::Base.transaction do
       User.insert_all(emails.map { |e| { email: e, created_at: now, updated_at: now } })
 
-      users_by_email = User.where(email: emails).index_by(&:email)
+      users_by_email = User.where(email: emails).pluck(:email, :id).to_h
 
       Payment.insert_all(
         rows.map do |row|
           {
-            user_id: users_by_email[row["email"]].id,
+            user_id: users_by_email[row["email"]],
             amount: row["amount"],
             channel: row["channel"],
             anonymous: row["anonymous"],

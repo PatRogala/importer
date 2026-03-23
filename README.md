@@ -68,3 +68,11 @@ dla miliona:
        user     system      total        real
   29.679511   0.578192  30.257703 ( 50.677439)
 ```
+
+## 6 to_h i pomijanie active modela dla usera:
+dla miliona:
+```bash
+=> rails "data:import"
+       user     system      total        real
+  27.886029   0.509611  28.395640 ( 48.032127)
+```
