@@ -92,3 +92,12 @@ dla miliona:
        user     system      total        real
     24.473711   0.994480  25.468191 ( 35.601851)
 ```
+
+
+## 8. Mutex
+dla miliona:
+```bash
+=> rails "data:import"
+       user     system      total        real
+    25.455745   0.780272  26.236017 ( 26.605035)
+```
