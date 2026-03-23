@@ -33,3 +33,11 @@
        user     system      total        real
    1.236214   0.093411   1.329625 (  1.497088)
 ```
+
+## 2 Poprawka zamiana userów find or create by
+
+```bash
+=> rails "data:import"
+       user     system      total        real
+   0.052236   0.008567   0.060803 (  0.080048)
+```
