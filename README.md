@@ -51,3 +51,12 @@
        user     system      total        real
   46.276868   0.268088  46.544956 ( 46.592823)
 ```
+
+## 4 poprawka skippowanie overheada do created/updated at, transakcja dla pojedynczego fsync
+
+dla miliona:
+```bash
+=> rails "data:import"
+       user     system      total        real
+  30.657922   0.607842  31.265764 ( 52.911782)
+```
