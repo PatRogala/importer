@@ -10,7 +10,7 @@ class ImportService < ApplicationService
     emails = all_lines.map { |line| line.split(",", 2).first }.uniq.sort
 
     parallel_insert(emails.each_slice(BATCH_SIZE)) do |batch, conn|
-      vals = batch.map { |e| "('#{e}', '#{ts}', '#{ts}')" }.join(", ")
+      vals = batch.map { |e| "(#{conn.quote(e)}, '#{ts}', '#{ts}')" }.join(", ")
       conn.execute("INSERT IGNORE INTO users (email, created_at, updated_at) VALUES #{vals}")
     end
 
@@ -48,7 +48,7 @@ class ImportService < ApplicationService
   def insert_payments(raw_lines, users_by_email, ts, conn)
     vals = raw_lines.map do |line|
       r = line.chomp.split(",")
-      "('#{users_by_email[r[0]]}', '#{r[1]}', '#{r[2]}', '#{r[3] == "true" ? 1 : 0}', '#{ts}', '#{ts}')"
+      "(#{users_by_email[r[0]].to_i}, #{r[1].to_f}, #{conn.quote(r[2])}, #{r[3] == "true" ? 1 : 0}, '#{ts}', '#{ts}')"
     end.join(", ")
 
     conn.execute("INSERT INTO payments (user_id, amount, channel, anonymous, created_at, updated_at) VALUES #{vals}")
