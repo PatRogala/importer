@@ -76,3 +76,11 @@ dla miliona:
        user     system      total        real
   27.886029   0.509611  28.395640 ( 48.032127)
 ```
+
+## 6 ignorowanie heavy CSV::Row
+dla miliona:
+```bash
+=> rails "data:import"
+       user     system      total        real
+    22.704053   0.554081  23.258134 ( 43.716001)
+```
