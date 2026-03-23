@@ -84,3 +84,11 @@ dla miliona:
        user     system      total        real
     22.704053   0.554081  23.258134 ( 43.716001)
 ```
+
+## 7. Workers
+dla miliona:
+```bash
+=> rails "data:import"
+       user     system      total        real
+    24.473711   0.994480  25.468191 ( 35.601851)
+```
