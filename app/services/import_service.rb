@@ -36,8 +36,14 @@ class ImportService < ApplicationService
     emails = rows.map { |r| r[0] }.uniq
     emails.sort! # Gap Lock Deadlocks
 
+    ts = now.to_fs(:db)
+    placeholders = ([ "(?, ?, ?)" ] * emails.size).join(", ")
+    values = emails.flat_map { |e| [ e, ts, ts ] }
+    sql = ActiveRecord::Base.sanitize_sql(
+      [ "INSERT IGNORE INTO users (email, created_at, updated_at) VALUES #{placeholders}", *values ]
+    )
     USER_INSERT_MUTEX.synchronize do
-      User.insert_all(emails.map { |e| { email: e, created_at: now, updated_at: now } })
+      ActiveRecord::Base.connection.execute(sql)
     end
 
     users_by_email = User.where(email: emails).pluck(:email, :id).to_h
