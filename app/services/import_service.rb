@@ -48,18 +48,14 @@ class ImportService < ApplicationService
 
     users_by_email = User.where(email: emails).pluck(:email, :id).to_h
 
-    payment_payloads = rows.map do |row|
-      {
-        user_id: users_by_email[row[0]],
-        amount: row[1],
-        channel: row[2],
-        anonymous: row[3],
-        created_at: now,
-        updated_at: now
-      }
-    end
-    payment_payloads.sort_by! { |p| p[:user_id] } # Gap Lock Deadlocks
+    payment_rows = rows.map { |row| [ users_by_email[row[0]], row[1], row[2], row[3] == "true" ? 1 : 0, ts, ts ] }
+    payment_rows.sort_by! { |r| r[0] } # Gap Lock Deadlocks
 
-    Payment.insert_all(payment_payloads)
+    placeholders = ([ "(?, ?, ?, ?, ?, ?)" ] * payment_rows.size).join(", ")
+    values = payment_rows.flatten
+    sql = ActiveRecord::Base.sanitize_sql(
+      [ "INSERT INTO payments (user_id, amount, channel, anonymous, created_at, updated_at) VALUES #{placeholders}", *values ]
+    )
+    ActiveRecord::Base.connection.execute(sql)
   end
 end

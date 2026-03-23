@@ -109,3 +109,11 @@ dla miliona:
        user     system      total        real
     19.448658   0.863878  20.312536 ( 20.567648)
 ```
+
+## 10. ActiveRecord pomijany dla payments
+dla miliona:
+```bash
+=> rails "data:import"
+       user     system      total        real
+    10.384322   0.619582  11.003904 ( 13.676177)
+```
