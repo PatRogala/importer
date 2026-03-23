@@ -41,3 +41,13 @@
        user     system      total        real
    0.052236   0.008567   0.060803 (  0.080048)
 ```
+
+## 3 poprawka, rozbicie to na slice z myślą o większych zbiorach danych
+
+1 Test dla miliona rekordów
+
+```bash
+=> rails "data:import"
+       user     system      total        real
+  46.276868   0.268088  46.544956 ( 46.592823)
+```
