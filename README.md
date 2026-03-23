@@ -117,3 +117,11 @@ dla miliona:
        user     system      total        real
     10.384322   0.619582  11.003904 ( 13.676177)
 ```
+
+## 11. Powrót do korzeni usuniecie mutexa i workerów
+dla miliona:
+```bash
+=> rails "data:import"
+       user     system      total        real
+   5.500348   0.626179   6.126527 ( 20.441566)
+```
